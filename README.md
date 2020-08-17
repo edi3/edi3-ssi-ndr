@@ -1,2 +1,2 @@
 # edi3-ssi-ndr
-Self-Sovereign Identity - Distributed Identities &amp; Verifiable Credentials
+Self-Sovereign Identity - Decentralized Identities &amp; Verifiable Credentials
