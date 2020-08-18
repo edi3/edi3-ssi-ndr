@@ -135,16 +135,16 @@ JSON Schema of the credential. In this case defined by DCSA.
 ## Credential
 ```
   "credentialSubject": {
-    "consignee": {
-      "id": "did:v1:tradingco:4bdc45e2-dbce-11ea-87d0-0242ac854126",
-      "name": "TRADING CO",
-      "printedParty": "TRADING CO",
-      "partyRef": "12700219780"
-    },
     "consignor": {
       "id": "did:sov:peachesww:ac8bd10a-dbce-11ea-87d0-0242ac130003",
       "name": "Peaches Worldwide",
       "printedParty": "PEACHES WW",
+      "partyRef": "12700219780"
+    },
+    "consignee": {
+      "id": "did:v1:tradingco:4bdc45e2-dbce-11ea-87d0-0242ac854126",
+      "name": "TRADING CO",
+      "printedParty": "TRADING CO",
       "partyRef": "12700219780"
     },
   }
@@ -153,7 +153,8 @@ Everything which makes up the actual credential is included in the `credentialSu
 Its content is what is signed in `proof` and can be validated against the schema defined in `credentialSchema`. 
 
 With this, the consignee and consignor - represented by DIDs on separate identity networks - can proof their role in relation to this Bill Of Lading. 
-
+Specifically, `Peaches Worldwide` (`did:sov:peachesww:ac8bd10a-dbce-11ea-87d0-0242ac130003`) can prove that they are the consignor, and `TRADING CO` (`did:v1:tradingco:4bdc45e2-dbce-11ea-87d0-0242ac854126`) can prove to be the consignee. 
+Both claims attested by `Maersk` (`did:v1.maersk:43ba3108-dbce-11ea-87d0-0242ac130003`), the issuer. 
 
 # Full Example
 The following is the full example of the elements explained above: 
