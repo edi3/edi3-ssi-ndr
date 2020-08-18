@@ -62,10 +62,101 @@ Technically, this is enabled by common asynchronous cryptography, linking VCs to
 The VC standard can be found here: 
 https://www.w3.org/TR/vc-data-model/
 
+# Structure of a Verifiable Credential
+The following is piece by piece breakdown of a Verifiable Credential. 
+As an example this takes the shape of a Bill Of Lading, generated from the methodology https://edi3.org/tools-and-methods/.
+Please note that this is just an illustrative example with fake data.
 
-# Example
-The following is a Bill Of Lading, generated from the methodology https://edi3.org/tools-and-methods/
+## Contexts
+```
+  "@context": [
+     "https://www.w3.org/2018/credentials/v1",
+     "https://unece.cefact.org/vocab/bsp",
+     "https://dcsa.org/vocab"
+   ],
+```
+The `@context` indicates where used semantics are defined. 
 
+The first defines the VC elements such as `VerifiableCredential`, `issuer`, `proof` and `credentialsSubject`.
+
+The next is the UN/CEFACT B-S-P semantic model expressed for machine linkage. Exposing this vocabulary is among the main goals of the edi3 project (see https://edi3.org/specs/edi3-json-ld-ndr/develop/). At time of writing this is still work in progress.
+
+Finally, since the Bill Of Lading is a key carrier-related document, it can be expected that DCSA.org will at one point express certain definitions, including `BillOfLading`. 
+
+## Identifier
+```
+  "id": "http://ebl.tradelens.com/6057611a-0122-40ec-a584-ac5c8c0a874f",
+```
+Being a JSON-LD document, the Bill Of Lading document needs an identifier. In this case the BOL is issued on TradeLens. 
+
+## Document Type
+```
+  "type": [
+    "VerifiableCredential",
+    "BillOfLading"
+  ],
+```
+This defines that the document is a Verifiable Credential expressing a Bill Of Lading. 
+
+## Issuer 
+```
+  "issuer": "did:v1.maersk:43ba3108-dbce-11ea-87d0-0242ac130003",
+```
+The issuing organization. In this case Maersk, represented by an example DID
+
+## Validity Period
+```
+  "issuanceDate": "2020-06-22T06:25:10Z",
+  "expirationDate": "2021-06-22T06:25:10Z",
+```
+The validity period of a VC can be limited, here limited to one year. 
+
+## Signature
+```
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2020-04-17T18:03:18Z",
+    "verificationMethod": "did:example:123#key-1",
+    "nonce": "c0ae1c8e-c7e7-469f-b253-86e6a0e7387e",
+    "signatureValue": "5TcawVLuoqRjCuu4jAmRqBcKoab2YVqxG8RXnQwvQBHNwP7RhPwXh"
+  },
+```
+The `issuer`'s signature of the VC. 
+
+## Schema 
+```
+  "credentialSchema": {
+    "id": "https://dcsa.org/schemas/billOfLading.json",
+    "type": "JsonSchemaValidator2018"
+  },
+```
+JSON Schema of the credential. In this case defined by DCSA.
+
+## Credential
+```
+  "credentialSubject": {
+    "consignee": {
+      "id": "did:v1:tradingco:4bdc45e2-dbce-11ea-87d0-0242ac854126",
+      "name": "TRADING CO",
+      "printedParty": "TRADING CO",
+      "partyRef": "12700219780"
+    },
+    "consignor": {
+      "id": "did:sov:peachesww:ac8bd10a-dbce-11ea-87d0-0242ac130003",
+      "name": "Peaches Worldwide",
+      "printedParty": "PEACHES WW",
+      "partyRef": "12700219780"
+    },
+  }
+```
+Everything which makes up the actual credential is included in the `credentialSubject` element.
+Its content is what is signed in `proof` and can be validated against the schema defined in `credentialSchema`. 
+
+With this, the consignee and consignor - represented by DIDs on separate identity networks - can proof their role in relation to this Bill Of Lading. 
+
+
+# Full Example
+The following is the full example of the elements explained above: 
 ```
 {
   "@context": [
