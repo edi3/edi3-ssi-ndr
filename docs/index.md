@@ -1,5 +1,5 @@
 ---
-title: "edi3 JSON-LD NDR 1.0 Specification"
+title: "edi3 Self-Sovereign Identity 1.0 Specification"
 specID: "ssi-ndr/1"
 status: "![raw](https://rfc.unprotocols.org/spec:2/COSS/raw.svg)"
 editors: "[Nis Jespersen](mailto:nis.jespersen@gtdsolution.com)"
@@ -12,6 +12,7 @@ Raw
 ## Glossary
 
 Phrase | Definition
+
 ------------ | -------------
 
 
